@@ -1,27 +1,16 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect} from "react"
 
 export default function Topbar(){
-    const [isOpen, setIsOpen] = useState(false)
-    const container = useRef()
+    // useEffect(()=> {
+    //     function handleScroll(){
+    //         container.current.classList.remove('block')
+    //     }
+    //     window.addEventListener('scroll', handleScroll)
 
-    useEffect(()=> {
-        container.current.classList.toggle('block')
-    }, [isOpen])
-
-    useEffect(()=> {
-        function handleScroll(){
-            container.current.classList.remove('block')
-        }
-        window.addEventListener('scroll', handleScroll)
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll)
-        }
-    }, [])
-
-    function handleClick(){
-        setIsOpen(open => !open)
-    }
+    //     return () => {
+    //         window.removeEventListener('scroll', handleScroll)
+    //     }
+    // }, [])
 
     return (
         <header>
@@ -37,29 +26,17 @@ export default function Topbar(){
                     <a href="#!"><img src="images/bars.png" alt="" title="Menu"/></a>
                 </div>
                 <ul className="top-menu">
-                    <li className="top-icon hover chats" data-chats="1">
+                    <li className="top-icon hover chats">
                         <a href="#!"><img src="images/messenger.png" alt="" title="Messenger"/></a>
                         <div className="top-icon-des">
                             <p className="top-icon-p"><small>Messenger</small></p>
                         </div>
                     </li>
-                    <li className="top-icon hover notif" data-notif="5">
+                    <li className="top-icon hover notif">
                         <a href="#!"><img src="images/notif.png" alt="" title="Notifications"/></a>
                         <div className="top-icon-des">
                             <p className="top-icon-p"><small>Notifications</small></p>
                         </div>
-                    </li>
-                    <li className="top-icon profile-nav" onClick={handleClick} ref={container}>
-                        <a><img src="images/robin.png" alt=""/></a>
-                        <ul className="new">
-                            <h3> What's New?    </h3>
-                            <li>• Unlimited New Post</li>
-                            <li>• Delete Existing Posts</li>
-                            <li>• Like Posts</li>
-                            <li>• Delete Friend Request</li>
-                            <li>• Stories Slider</li>
-                            <li><small>Other functionalities are still under development, v2.0.0</small></li>
-                        </ul>
                     </li>
                 </ul>
             </nav>

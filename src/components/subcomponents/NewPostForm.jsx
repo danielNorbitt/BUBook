@@ -32,10 +32,10 @@ export default function NewPostForm({setPost}){
         <form className="news-header flex-row border-bot" onSubmit={handleSubmit}>
             <div className="flex-row status">
                 <div className="news-dp">
-                    <img src="images/robin.png" alt=""/>
+                    <img src="images/laura-circle.png" alt=""/>
                 </div>
                 <div className="mind-input">
-                    <input className="hover post-input"type="text" placeholder="Whats on your mind, Robin?" value={input} onChange={e => setInput(e.target.value)}/>
+                    <input className="hover post-input"type="text" placeholder="Whats on your mind, Laura?" value={input} onChange={e => setInput(e.target.value)}/>
                 </div>
                 {toast && <Toast toaster={toaster} removeToast={removeToast}/>}
             </div>
