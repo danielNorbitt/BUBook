@@ -1,31 +1,59 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {format} from 'date-fns';
 import NewsfeedHeader from "./subcomponents/NewsfeedHeader";
 import PhotoPost from "./subcomponents/PhotoPost";
 import VideoPost from "./subcomponents/VideoPost";
-
-const friends = [{dp:"images/laura.jpg", name:"Laura", ago:"17/10/1999", likes:0, comments:0, shares:0, desc:"jajajajaj", post:"images/laura.jpg", reactType:"images/react2.png", border :false, html:true, key:4324, newPost:false},
-{dp:"images/laura.jpg", name:"Laura", ago:"17/10/1999", likes:0, comments:0, shares:0, desc:"jajajajaj", post:"images/laura.jpg", reactType:"images/react2.png", border :false, html:true, key:4324, newPost:false},
-{dp:"images/laura.jpg", name:"Laura", ago:"17/10/1999", likes:0, comments:0, shares:0, desc:"jajajajaj", post:"images/laura.jpg", reactType:"images/react2.png", border :false, html:true, key:4324, newPost:false},
-{dp:"images/laura.jpg", name:"Laura", ago:"17/10/1999", likes:0, comments:0, shares:0, desc:"jajajajaj", post:"images/laura.jpg", reactType:"images/react2.png", border :false, html:true, key:4324, newPost:false},
-{dp:"images/laura.jpg", name:"Laura", ago:"17/10/1999", likes:0, comments:0, shares:0, desc:"jajajajaj", post:"images/laura.jpg", reactType:"images/react2.png", border :false, html:true, key:4324, newPost:false},
-{dp:"images/laura.jpg", name:"Laura", ago:"17/10/1999", likes:0, comments:0, shares:0, desc:"jajajajaj", post:"images/laura.jpg", reactType:"images/react2.png", border :false, html:true, key:4324, newPost:false},
-{dp:"images/laura.jpg", name:"Laura", ago:"17/10/1999", likes:0, comments:0, shares:0, desc:"jajajajaj", post:"images/laura.jpg", reactType:"images/react2.png", border :false, html:true, key:4324, newPost:false}]
+import axiosApi from "../axios";
 
 export default function Newsfeed(){
     const [newPost, setNewPost] = useState([])
 
+    const [posts, setPosts] = useState([])
+
     function setPost(post){
         setNewPost(prevPost => [...prevPost, post])
     }
+
+    useEffect(() => {
+        axiosApi
+            .get("/posts")
+            .then(({data}) => {
+                setPosts(data)
+            })
+    },[])
+
+    const postMapper = (postResponse) => {
+
+        const postProps = {dp:postResponse.user.photo, 
+                           name:postResponse.user.name, 
+                           ago:`${format(new Date(postResponse.date), "dd/MM/yyyy")}`,
+                           desc:postResponse.content ,
+                           post:postResponse.url ,
+                           likes:postResponse.likes ,
+                           comments:0 ,
+                           shares:postResponse.shares ,
+                           reactType:"images/react2.png" ,
+                           border:true ,
+                           html:true ,
+                           key:postResponse.id ,
+                           newPost:false}
+
+        if(postResponse.isVideo) {
+            return <VideoPost {...postProps}/>
+        }else{
+            return <PhotoPost {...postProps}/>
+        }
+    }
+
+
     return (
         <main className="flex-column main">
             <NewsfeedHeader setPost={setPost}/>
 
             <div className="newsfeed post-container">
-                {newPost.map(post => <PhotoPost dp={"images/laura.jpg"} name={"Robin Dela Cruz"} ago={`${format(new Date(), "dd/MM/yyyy")}s`} desc={post} post={""} likes={0} comments={0} shares={0} reactType={"images/react2.png"} key={Math.floor(Math.random() *9999)} newPost={true}/>)}
+                {newPost.map(post => <PhotoPost dp={"images/laura.jpg"} name={"Laura"} ago={`${format(new Date(), "dd/MM/yyyy")}`} desc={post} post={""} likes={0} comments={0} shares={0} reactType={"images/react2.png"} key={Math.floor(Math.random() *9999)} newPost={true}/>)}
             </div>
-            {friends.map((friend,index) => <PhotoPost dp={friend.dp} name={friend.name} ago={friend.ago} desc={friend.desc} post={friend.post} likes={friend.likes} comments={friend.comments} shares={friend.shares} reactType={friend.reactType} border={friend.border} html={friend.html} key={index} newPost={friend.newPost}/>)}
+            {posts.map((post) => postMapper(post))}
         </main>
 
     )

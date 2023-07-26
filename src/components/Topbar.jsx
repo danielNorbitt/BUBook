@@ -1,17 +1,4 @@
-import { useEffect} from "react"
-
 export default function Topbar(){
-    // useEffect(()=> {
-    //     function handleScroll(){
-    //         container.current.classList.remove('block')
-    //     }
-    //     window.addEventListener('scroll', handleScroll)
-
-    //     return () => {
-    //         window.removeEventListener('scroll', handleScroll)
-    //     }
-    // }, [])
-
     return (
         <header>
             <nav>

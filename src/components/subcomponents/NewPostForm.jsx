@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import Toast from "./Toast"
+import axiosApi from "../../axios";
+import {format} from 'date-fns';
 
 export default function NewPostForm({setPost}){
     const [input, setInput] = useState('')
@@ -21,6 +23,11 @@ export default function NewPostForm({setPost}){
             }, 3000)
         }
         else{
+            axiosApi.post('/posts', {
+                userId: process.env.NODE_ENV === "production" ? "9553c67e-a740-45da-881b-3ce67c4cd48b" : "a4ca9ac5-9921-4528-a876-9a5c5def8035",
+                content:input,
+                date:format(new Date(), "yyyy-MM-dd"),
+            })
             setPost(input)
             setInput('')
         }

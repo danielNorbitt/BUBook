@@ -1,8 +1,19 @@
+import { useEffect , useState} from "react";
 import Friends from "./subcomponents/Friends";
-
-const friends = [{image:"images/laura.jpg",name:"Laura Kings"}]
+import axiosApi from "../axios";
 
 export default function RightBar(){
+
+    const [friends,setFriends] = useState([])
+
+    useEffect(() => {
+        axiosApi
+            .get("/users")
+            .then(({data}) => {
+                setFriends(data)
+            })
+    },[])
+
     return (
         <nav className="right-bar">
             <div className="div">
@@ -12,7 +23,7 @@ export default function RightBar(){
                         <img src="images/dotmen.png" alt=""/>
                     </div>
                 </div>
-                {friends.map((friend,index) => <Friends image={friend.image} name={friend.name} key={index}/>)}
+                {friends.map((friend) => <Friends image={friend.photo} name={friend.name} key={friend.id}/>)}
             </div>
         </nav>
     )
