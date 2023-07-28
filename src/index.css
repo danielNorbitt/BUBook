@@ -1159,6 +1159,10 @@ button{
       margin-inline: 0 14rem;
   }
 
+  .interact-icons{
+    font-size: 11px;
+  }
+
 }
 @media(max-width:899px){
   .right-bar{
