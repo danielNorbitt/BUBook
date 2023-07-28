@@ -23,7 +23,7 @@ export default function Newsfeed(){
     },[])
 
     const postMapper = (postResponse) => {
-
+        
         const postProps = {dp:postResponse.user.photo, 
                            name:postResponse.user.name, 
                            ago:`${format(new Date(postResponse.date), "dd/MM/yyyy")}`,
@@ -51,7 +51,7 @@ export default function Newsfeed(){
             <NewsfeedHeader setPost={setPost}/>
 
             <div className="newsfeed post-container">
-                {newPost.map(post => <PhotoPost dp={"images/laura.jpg"} name={"Laura"} ago={`${format(new Date(), "dd/MM/yyyy")}`} desc={post} post={""} likes={0} comments={0} shares={0} reactType={"images/react2.png"} key={Math.floor(Math.random() *9999)} newPost={true}/>)}
+                {newPost.map(post => <PhotoPost dp={"images/laura.jpg"} name={post.name} ago={`${format(new Date(), "dd/MM/yyyy")}`} desc={post} post={""} likes={0} comments={0} shares={0} reactType={"images/react2.png"} key={Math.floor(Math.random() *9999)} newPost={true}/>)}
             </div>
             {posts.map((post) => postMapper(post))}
         </main>

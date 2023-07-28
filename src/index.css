@@ -738,7 +738,9 @@ main{
 }
 .news-dp img{
   width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
+  object-fit: contain;
 }
 .under-name{
   gap:.5rem;
