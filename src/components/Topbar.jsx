@@ -3,7 +3,7 @@ export default function Topbar(){
         <header>
             <nav>
                 <div>
-                    <a href=""><img src="images/beu.png" alt=""/></a>
+                    <a href=""><img src="images/logo.png" alt=""/></a>
                 </div>
                 <div className="search hover">
                     <i className="fa-sharp fa-solid fa-magnifying-glass search_icon"></i>
